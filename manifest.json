@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Manager",
+  "description": "タブの管理をする拡張機能です",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tab manager"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
+}
