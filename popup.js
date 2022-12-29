@@ -16,7 +16,7 @@ deletebtn.onclick = () => {
     console.log("削除されたわよな")
     var error = chrome.runtime.lastError;
        if (error) {
-           console.error(error);
+           console.error(error)
        }
    })
 }
@@ -31,12 +31,18 @@ getbtn.onclick = async () => {
   console.dir(getData["宮城県"]);
 }
 
+const viewTabs = (getTabs) => {
+  for(let i =0; i < getTabs.length  ;i++){
+    const h3Element = document.createElement("h3");
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "閉じる";
+    h3Element.innerText = ` ${i + 1} ${getTabs[i].title} & ${getTabs[i].id}`;
+    tabList.appendChild(h3Element);
+    tabList.appendChild(removeButton);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   let getTabs = await chrome.tabs.query({currentWindow: true});
-  for(let i =0; i < getTabs.length  ;i++){
-    const h3Element = document.createElement("h3");
-    h3Element.innerText = ` ${i + 1} ${getTabs[i].title} & ${getTabs[i].id}`;
-    tabList.appendChild(h3Element);
-  }
+  viewTabs(getTabs);
 });
