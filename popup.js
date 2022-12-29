@@ -1,44 +1,35 @@
 const tabList = document.getElementById("tabList");
-const setbtn = document.getElementById("setbtn");
-const getbtn = document.getElementById("getbtn");
-const deletebtn = document.getElementById("deletebtn");
 
-function onError(error) {
-  console.dir(error);
+chrome.tabs.onRemoved.addListener(async () => {
+  let getTabs = await chrome.tabs.query({currentWindow: true});
+  viewTabs(getTabs);
+});
+
+
+const onClose = (e) => {
+  console.log(e.currentTarget.id);
+  let removing = chrome.tabs.remove(Number(e.currentTarget.id));
+  console.log(removing);
 }
 
-const addNewTab = (tabs , tab) => {
 
+
+const addTab = (tab,index) => {
+  const h3Element = document.createElement("h3");
+  const removeButton = document.createElement("button");
+  h3Element.innerText = `${index + 1} ${tab.title} `;
+  removeButton.id =  tab.id;
+  removeButton.textContent = "閉じる";
+  removeButton.addEventListener("click",onClose);
+  tabList.appendChild(h3Element);
+  tabList.appendChild(removeButton);
 }
 
-deletebtn.onclick = () => {
-  chrome.storage.local.remove("宮城県", function(){
-    console.log("削除されたわよな")
-    var error = chrome.runtime.lastError;
-       if (error) {
-           console.error(error)
-       }
-   })
-}
-
-setbtn.onclick = () => {
-  chrome.storage.local.set({"宮城県":"仙台市"}, alert("保存されたわよな"))
-}
-
-getbtn.onclick = async () => {
-  let getData = await chrome.storage.local.get("宮城県")
-  console.dir(getData);
-  console.dir(getData["宮城県"]);
-}
 
 const viewTabs = (getTabs) => {
+  tabList.innerHTML = "";
   for(let i =0; i < getTabs.length  ;i++){
-    const h3Element = document.createElement("h3");
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "閉じる";
-    h3Element.innerText = ` ${i + 1} ${getTabs[i].title} & ${getTabs[i].id}`;
-    tabList.appendChild(h3Element);
-    tabList.appendChild(removeButton);
+    addTab(getTabs[i],i);
   }
 }
 
