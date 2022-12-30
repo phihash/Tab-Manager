@@ -8,14 +8,37 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
     body{
+      margin: 0;
+      padding: 0;
+      font-size: 1rem;
       font-family: 'Roboto', sans-serif;
-      width: 320px;
+      width: 760px;
     }
+    button{
+      cursor: pointer;
+    }
+    .d-flex{
+      display: flex;
+    }
+    .site-header{
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #333;
+      color: #fff;
+    }
+    .tab-list{
+    margin-top: 80px;
+    }
+
   </style>
 </head>
 <body>
-  <h1>Tab Manager</h1>
-  <div id="tabList">
+  <div class="d-flex site-header">
+    <p>Tab Manager</p>
+    <input type="text" id="groupInput" placeholder="何で分類しますか?">
+  </div>
+  <div id="tabList" class="tab-list">
   </div>
   <script src="popup.js"></script>
 </body>
